@@ -33,7 +33,7 @@ Title.Position = UDim2.new(0.5, 0, 0, 10)
 Title.AnchorPoint = Vector2.new(0.5, 0)
 Title.Size = UDim2.new(0.8, 0, 0, 30)
 Title.BackgroundTransparency = 1
-Title.Text = "Darkspawner"
+Title.Text = "DarkSpawner"
 Title.TextColor3 = Color3.fromRGB(255, 255, 255)
 Title.Font = Enum.Font.GothamBold
 Title.TextScaled = true
@@ -62,36 +62,47 @@ ProgressBar.Size = UDim2.new(0, 0, 1, 0)
 ProgressBar.BackgroundColor3 = Color3.fromRGB(0, 170, 255)
 ProgressBar.BorderSizePixel = 0
 
--- **Added Subtitle here**
 local Subtitle = Instance.new("TextLabel")
 Subtitle.Parent = Frame
 Subtitle.Position = UDim2.new(0, 0, 0.8, 0)
 Subtitle.Size = UDim2.new(1, 0, 0.15, 0)
 Subtitle.BackgroundTransparency = 1
 Subtitle.Text = "Loading by ProjectB"
-Subtitle.TextColor3 = Color3.fromRGB(180, 180, 180)
 Subtitle.Font = Enum.Font.Gotham
 Subtitle.TextScaled = true
 
-TweenService:Create(ProgressBar, TweenInfo.new(15, Enum.EasingStyle.Linear), {
+-- **RGB color cycle**
+task.spawn(function()
+	while true do
+		for hue = 0, 1, 0.01 do
+			local color = Color3.fromHSV(hue, 1, 1)
+			Subtitle.TextColor3 = color
+			task.wait(0.05)
+		end
+	end
+end)
+
+-- **Set to 5 seconds**
+local loadTime = 5
+
+TweenService:Create(ProgressBar, TweenInfo.new(loadTime, Enum.EasingStyle.Linear), {
 	Size = UDim2.new(1, 0, 1, 0)
 }):Play()
 
 task.spawn(function()
 	local startTime = tick()
-	local duration = 15
-
 	local connection
+
 	connection = RunService.RenderStepped:Connect(function()
 		local elapsed = tick() - startTime
-		local percent = math.clamp((elapsed / duration) * 100, 0, 100)
+		local percent = math.clamp((elapsed / loadTime) * 100, 0, 100)
 		PercentText.Text = ("Loading: %d%%"):format(math.floor(percent + 0.5))
 
-		if elapsed >= duration then
+		if elapsed >= loadTime then
 			connection:Disconnect()
 			ScreenGui:Destroy()
 
-loadstring(game:HttpGet("https://raw.githubusercontent.com/DarkscriptHUBS/Loadinggui/refs/heads/main/NewUpdate.lua"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/DarkscriptHUBS/Loadinggui/refs/heads/main/NewUpdate.lua"))()				
 		end
 	end)
 end)
