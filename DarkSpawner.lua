@@ -77,7 +77,7 @@ end
 -- ▼ Otherwise show Loading GUI ▼
 
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "RandomizerGUI"
+ScreenGui.Name = "DarkspawnerGUI"
 ScreenGui.Parent = game.CoreGui
 ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 ScreenGui.IgnoreGuiInset = true
